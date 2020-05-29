@@ -7,12 +7,13 @@ use Getopt::Long qw(GetOptions);
 my ($in, $out);
 my $state = 0;
 my ($Path_state, $GO_state, $GO_slim_state) = (0)x3;
-my ($Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim);
+my ($Query, $Gene_id, $Gene_name, $Entrez_id);
 my (@All_pathway_ids, @All_GO_ids, @All_GO_slim_ids);
 
 # handle command line options
 GetOptions('i=s' => \$in,
            'o=s' => \$out) or die "Usage: $0 -i input_path -o output_path\n";
+
 # check command line options
 check_arguments($in, $out);
 
@@ -25,9 +26,9 @@ while(my $line = <$filehandle>) {
   }
   elsif($line =~ m!^/{4}! and $state == 1) {
     # concate final information of arrays
-    $Pathway = @All_pathway_ids ? join(";", @All_pathway_ids) : "NA";
-    $GO = @All_GO_ids ? join(";", @All_GO_ids) : "NA";
-    $GO_slim = @All_GO_slim_ids ? join(";", @All_GO_slim_ids) : "NA";
+    my $Pathway = @All_pathway_ids ? join(";", @All_pathway_ids) : "NA";
+    my $GO = @All_GO_ids ? join(";", @All_GO_ids) : "NA";
+    my $GO_slim = @All_GO_slim_ids ? join(";", @All_GO_slim_ids) : "NA";
 
     # output information
     # if output path is set, write to file
@@ -40,7 +41,7 @@ while(my $line = <$filehandle>) {
     }
 
     # reset variables for next annotation
-    ($Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim) = ("NA")x7;
+    ($Query, $Gene_id, $Gene_name, $Entrez_id) = ("NA")x4;
     @All_pathway_ids = ();
     @All_GO_ids = ();
     @All_GO_slim_ids = ();
@@ -112,7 +113,7 @@ sub check_arguments {
   }
   # check if output file already exists
   if(-e $_[1]) {
-    print("Output file already exists, please provide an other output path\n");
+    print("Output file already exists, please provide an other output path.\n");
     exit;
   }
 }
@@ -121,5 +122,4 @@ sub write_file {
   open(FH, ">>", $_[0]) || die $!;
   print(FH $_[1] . "\n");
   close(FH);
-  
 }
