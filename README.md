@@ -1,5 +1,5 @@
 ![GitHub](https://img.shields.io/github/license/mschemmel/KOparse)
-![HitCount](http://hits.dwyl.com/mschemmel/KOparse.svg)](http://hits.dwyl.com/mschemmel/KOparse)
+[![HitCount](http://hits.dwyl.com/mschemmel/KOparse.svg)](http://hits.dwyl.com/mschemmel/KOparse)
 
 # KOparse
 A perl script to parse KOBAS 'annotate' output to tabular format.
