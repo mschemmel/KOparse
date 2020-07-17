@@ -11,5 +11,9 @@ before_install:
 script:
     - perl annotate_parser.pl -i ./test/output_annotate.txt -o converted_annotation.txt
 
+after_failure:
+  - cat /home/travis/.cpanm/work/1595026579.3691/build.log
+
+
 notifications:
     email: false
