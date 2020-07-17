@@ -12,7 +12,8 @@ before_install:
     - sudo apt-get install -y libgmp-dev
 
 install:
-    - cpanm -v --installdeps --notest .
+    - cpanm --quiet --installdeps --notest .
+
 
 script:
     - perl annotate_parser.pl -i ./test/output_annotate.txt -o converted_annotation.txt
