@@ -12,7 +12,7 @@ before_install:
     - sudo apt-get install -y libgmp-dev
 
 install:
-    - cpanm --quiet --installdeps --notest .
+    - cpanm --installdeps . 
 
 
 script:
