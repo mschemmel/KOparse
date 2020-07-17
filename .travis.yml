@@ -1,0 +1,15 @@
+nguage: "perl"
+perl:
+    - "5.22"
+    - "5.20"
+    - "5.18"
+    - "5.16"
+    - "5.14"
+    - "5.12"
+
+
+script:
+    - perl annotate_parser.pl -i ./test/output_annotate.txt -o converted_annotation.txt
+
+notification:
+    email: false
