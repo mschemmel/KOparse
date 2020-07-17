@@ -7,7 +7,7 @@ use Getopt::Long qw(GetOptions);
 my ($in, $out);
 my $state = 0;
 my ($Path_state, $GO_state, $GO_slim_state) = (0)x3;
-my ($Query, $Gene_id, $Gene_name, $Entrez_id);
+my ($Query, $Gene_id, $Gene_name, $Entrez_id) = ("NA")x4;
 my (@All_pathway_ids, @All_GO_ids, @All_GO_slim_ids);
 
 # handle command line options
@@ -33,7 +33,7 @@ while(my $line = <$filehandle>) {
     # output information
     # if output path is set, write to file
     # otherwise print in console
-    if($out) {
+    if(defined $out) {
       write_file($out, join("\t", $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO,$GO_slim));
     }
     else {
@@ -112,7 +112,7 @@ sub check_arguments {
     exit;
   }
   # check if '-o' parameter is provided
-  if(defined $_[1]){
+  if(defined $_[1]) {
       # check if output file already exists
       if(-e $_[1]) {
 	print("Output file already exists, please provide an other output path.\n");
