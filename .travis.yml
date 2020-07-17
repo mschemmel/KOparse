@@ -7,6 +7,8 @@ perl:
     - "5.14"
     - "5.12"
 
+install:
+    - cpanm -v --installdeps --notest .
 
 script:
     - perl annotate_parser.pl -i ./test/output_annotate.txt -o converted_annotation.txt
