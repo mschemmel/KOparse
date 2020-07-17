@@ -34,7 +34,7 @@ while(my $line = <$filehandle>) {
     # if output path is set, write to file
     # otherwise print in console
     if($out) {
-      write_file($out, join("\t", $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim))
+      write_file($out, join("\t", $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO,$GO_slim));
     }
     else {
       print(join("\t", $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim) . "\n");
@@ -111,10 +111,13 @@ sub check_arguments {
     print("No input file provided. Use '-i'.");
     exit;
   }
-  # check if output file already exists
-  if(-e $_[1]) {
-    print("Output file already exists, please provide an other output path.\n");
-    exit;
+  # check if '-o' parameter is provided
+  if(defined $_[1]){
+      # check if output file already exists
+      if(-e $_[1]) {
+	print("Output file already exists, please provide an other output path.\n");
+	exit;
+      }
   }
 }
 sub write_file {
