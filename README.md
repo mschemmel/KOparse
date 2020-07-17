@@ -1,5 +1,4 @@
 ![GitHub](https://img.shields.io/github/license/mschemmel/KOparse)
-[![HitCount](http://hits.dwyl.com/mschemmel/KOparse.svg)](http://hits.dwyl.com/mschemmel/KOparse)
 
 # KOparse
 A perl script to parse KOBAS 'annotate' output to tabular format.
@@ -10,8 +9,8 @@ The annotation of transcripts or genes via homology comparison with for example 
 However, the format of the results after annotation is not very convenient, as it is not structured as a table. Therefore it is necessary to parse the achieved results of the annotate tool for potential use in downstream analysis.
 
 'annotate_parser' is a perl script parsing the results of the 'Annotate' section to tabular format.
-The columns of the formatted output table  are in order: Query Name, Gene ID, Gene name, Entrez id,
-Pathway, GO, GO slim.
+Using the default settings on the KOBAS site, the columns of the formatted output table are in order: Query Name, Gene ID, Gene name, Entrez id, Pathway, GO, GO slim.
+
 ## Usage
 ```
 perl annotate_parser.pl -i inputfile -o outputfile
