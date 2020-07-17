@@ -2,14 +2,6 @@ language: "perl"
 perl:
     - "5.30"
 
-before_install:
-    - sudo apt-get update -q
-    - sudo apt-get install -y libgmp-dev
-
-install:
-    - cpanm --installdeps . 
-
-
 script:
     - perl annotate_parser.pl -i ./test/output_annotate.txt -o converted_annotation.txt
 
