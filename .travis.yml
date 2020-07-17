@@ -10,5 +10,5 @@ before_install:
 script:
     - perl annotate_parser.pl -i ./test/output_annotate.txt -o converted_annotation.txt
 
-notification:
+notifications:
     email: false
