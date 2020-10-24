@@ -23,7 +23,6 @@ foreach(@samples) {
 	parse($_);
 }
 
-
 sub parse {
 	# open file and parse content using flip flop principle
 	open(my $filehandle,'<',$_[0]) || die "Can´t open $in: $!";
@@ -129,6 +128,7 @@ sub check_arguments {
       }
   }
 }
+
 sub write_file {
   # append parsed data to file
   open(FH, ">>", $_[0]) || die $!;
