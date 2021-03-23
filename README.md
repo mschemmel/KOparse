@@ -18,12 +18,10 @@ perl annotate_parser.pl -i inputfile -o outputfile
 ```
 
 ### Arguments
-| Parameter | Description |
-| --------- | ----------- |
-| `-i` | /path/to/input_file (if multiple -> comma separated) |
-| `-o` | /path/to/output_file |
-
-If no output path is specified, output is send to the console.
+| Parameter | Description | Comment |
+| --------- | ----------- | ------- |
+| `-i` | /path/to/input_file | if multiple -> comma separated |
+| `-o` | /path/to/output_file | if not specified, output is send to the console |
 
 ## Test
 The 'test' folder contains a template file, generated with the 'annotate' tool from KOBAS using their provided test IDs. 
