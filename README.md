@@ -18,8 +18,11 @@ perl annotate_parser.pl -i inputfile -o outputfile
 ```
 
 ### Arguments
-    -i /path/to/input_file	(multiple files -> comma separated) 
-    -o /path/to/output_file
+| Parameter | Description |
+| --------- | ----------- |
+| `-i` | /path/to/input_file (if multiple -> comma separated) |
+| `-o` | /path/to/output_file |
+
 If no output path is specified, output is send to the console.
 
 ## Test
