@@ -116,7 +116,7 @@ sub parse {
 sub check_arguments {
   # check if input file is provided, otherwise exit the program
   if(!$_[0]) {
-    print("No input file provided. Use '-i'.");
+    print("No input file provided. Use '-i'.\n");
     exit;
   }
   # check if '-o' parameter is provided
