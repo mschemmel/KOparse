@@ -2,8 +2,35 @@
 use warnings;
 use strict;
 use Getopt::Long qw(GetOptions);
+use Pod::Usage;
 
-# set variables
+# VERSION
+=head1 SYNOPSIS
+
+annotate_parser.pl -i kobas_output.txt -o kobas_tabular_output.txt
+
+=head1 DESCRIPTION
+
+Perl file to convert KOBAS annotate output to tabular format
+
+=head1 OPTIONS
+ 
+=over 8
+
+=item I<-i>
+
+Input file (original KOBAS annotate file)
+
+=item I<-o>
+	
+Output file to store converted KOBAS file. If no output path is provided, results will be printed on the console.
+
+=back 
+
+=cut
+
+
+my $help = 0;
 my ($in, $out);
 my $state = 0;
 my ($Path_state, $GO_state, $GO_slim_state) = (0)x3;
@@ -11,8 +38,15 @@ my ($Query, $Gene_id, $Gene_name, $Entrez_id) = ("NA")x4;
 my (@All_pathway_ids, @All_GO_ids, @All_GO_slim_ids);
 
 # handle command line options
+#GetOptions('i=s' => \$in,
+#           'o=s' => \$out) or die "Usage: $0 -i input_path -o output_path\n";
+
 GetOptions('i=s' => \$in,
-           'o=s' => \$out) or die "Usage: $0 -i input_path -o output_path\n";
+           'o=s' => \$out,
+					 q(help) => \$help) or pod2usage(q(-verbose) => 1);
+
+pod2usage(q(-verbose) => 1) if $help;
+
 
 # check command line options
 check_arguments($in, $out);
@@ -116,7 +150,7 @@ sub parse {
 sub check_arguments {
   # check if input file is provided, otherwise exit the program
   if(!$_[0]) {
-    print("No input file provided. Use '-i'.\n");
+    print("No input file provided. Use '-i' tag.\n");
     exit;
   }
   # check if '-o' parameter is provided
