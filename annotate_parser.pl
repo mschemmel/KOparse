@@ -38,15 +38,11 @@ my ($Query, $Gene_id, $Gene_name, $Entrez_id) = ("NA")x4;
 my (@All_pathway_ids, @All_GO_ids, @All_GO_slim_ids);
 
 # handle command line options
-#GetOptions('i=s' => \$in,
-#           'o=s' => \$out) or die "Usage: $0 -i input_path -o output_path\n";
-
 GetOptions('i=s' => \$in,
            'o=s' => \$out,
 					 q(help) => \$help) or pod2usage(q(-verbose) => 1);
 
 pod2usage(q(-verbose) => 1) if $help;
-
 
 # check command line options
 check_arguments($in, $out);
@@ -63,85 +59,85 @@ sub parse {
 	while(my $line = <$filehandle>) {
 	  chomp($line);
 	  if($line =~ m!^/{4}! and $state == 0) {
-		$state = 1;
+  		$state = 1;
 	  }
 	  elsif($line =~ m!^/{4}! and $state == 1) {
-		# concate final information of arrays
-		my $Pathway = @All_pathway_ids ? join(";", @All_pathway_ids) : "NA";
-		my $GO = @All_GO_ids ? join(";", @All_GO_ids) : "NA";
-		my $GO_slim = @All_GO_slim_ids ? join(";", @All_GO_slim_ids) : "NA";
+      # concate final information of arrays
+      my $Pathway = @All_pathway_ids ? join(";", @All_pathway_ids) : "NA";
+      my $GO = @All_GO_ids ? join(";", @All_GO_ids) : "NA";
+      my $GO_slim = @All_GO_slim_ids ? join(";", @All_GO_slim_ids) : "NA";
 
-		# output information
-		# if output path is set, write to file
-		# otherwise print in console
-		if(defined $out) {
-		  write_file($out, join("\t", $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim));
-		}
-		else {
-		  print(join("\t", $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim) . "\n");
-		}
+      # output information
+      # if output path is set, write to file
+      # otherwise print in console
+      if(defined $out) {
+        write_file($out, join("\t", $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim));
+      }
+      else {
+        print(join("\t", $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim) . "\n");
+      }
 
-		# reset variables for next annotation
-		($Query, $Gene_id, $Gene_name, $Entrez_id) = ("NA")x4;
-		@All_pathway_ids = ();
-		@All_GO_ids = ();
-		@All_GO_slim_ids = ();
+      # reset variables for next annotation
+      ($Query, $Gene_id, $Gene_name, $Entrez_id) = ("NA")x4;
+      @All_pathway_ids = ();
+      @All_GO_ids = ();
+      @All_GO_slim_ids = ();
 
-		# set state
-		$state = 1;
+      # set state
+      $state = 1;
 	  }
 	  elsif($state) {
-		# get query id
-		if($line =~ /^Query:/) {
-		  $Query = (split(/\t/,$line))[1] // "NA";
-		}
+      # get query id
+      if($line =~ /^Query:/) {
+        $Query = (split(/\t/,$line))[1] // "NA";
+      }
 
-		# get gene id
-		if($line =~ /^Gene:/) {
-		  $Gene_id = (split(/\t/,$line))[1] // "NA";
-		  $Gene_name = (split(/\t/,$line))[2] // "NA";
-		}
+      # get gene id
+      if($line =~ /^Gene:/) {
+        $Gene_id = (split(/\t/,$line))[1] // "NA";
+        $Gene_name = (split(/\t/,$line))[2] // "NA";
+      }
 
-		# get entrez gene id
-		if($line =~ /^Entrez/) {
-		  $Entrez_id = (split(/\t/,$line))[1] // "NA";
-		}
+      # get entrez gene id
+      if($line =~ /^Entrez/) {
+        $Entrez_id = (split(/\t/,$line))[1] // "NA";
+      }
 
-		# get pathway ids
-		if($line =~ /^Pathway:/ and $Path_state == 0) {
-		  push(@All_pathway_ids, (split(/\t/,$line))[-1] // "NA");
-		  $Path_state = 1
-		}
-		elsif($line !~ /^\s/ and $Path_state == 1) {
-		  $Path_state = 0;
-		}
-		elsif($Path_state) {
-		  push(@All_pathway_ids, (split(/\t/,$line))[-1] // "NA");
-		}
+      # get pathway ids
+      if($line =~ /^Pathway:/ and $Path_state == 0) {
+        push(@All_pathway_ids, (split(/\t/,$line))[-1] // "NA");
+        $Path_state = 1
+      }
+      elsif($line !~ /^\s/ and $Path_state == 1) {
+        $Path_state = 0;
+      }
+      elsif($Path_state) {
+        push(@All_pathway_ids, (split(/\t/,$line))[-1] // "NA");
+      }
 
-		# get GO ids
-		if($line =~ /^GO:/ and $GO_state == 0) {
-		  push(@All_GO_ids, (split(/\t/,$line))[-1] // "NA");
-		  $GO_state = 1
-		}
-		elsif($line !~ /^\s/ and $GO_state == 1) {
-		  $GO_state = 0;
-		}
-		elsif($GO_state) {
-		  push(@All_GO_ids, (split(/\t/,$line))[-1] // "NA");
-		}
+      # get GO ids
+      if($line =~ /^GO:/ and $GO_state == 0) {
+        push(@All_GO_ids, (split(/\t/,$line))[-1] // "NA");
+        $GO_state = 1
+      }
+      elsif($line !~ /^\s/ and $GO_state == 1) {
+        $GO_state = 0;
+      }
+      elsif($GO_state) {
+        push(@All_GO_ids, (split(/\t/,$line))[-1] // "NA");
+      }
 
-		# get GO Slim ids
-		if($line =~ /^GOslim:/ and $GO_slim_state == 0) {
-		  push(@All_GO_slim_ids, (split(/\t/,$line))[-1] // "NA");
-		  $GO_slim_state = 1
-		}
-		elsif($line !~ /^\s/ and $GO_slim_state == 1) {
-		  $GO_slim_state = 0;
-		}
-		elsif($GO_slim_state) {
-		  push(@All_GO_slim_ids, (split(/\t/,$line))[-1] // "NA");
-		}
+      # get GO Slim ids
+      if($line =~ /^GOslim:/ and $GO_slim_state == 0) {
+        push(@All_GO_slim_ids, (split(/\t/,$line))[-1] // "NA");
+        $GO_slim_state = 1
+      }
+      elsif($line !~ /^\s/ and $GO_slim_state == 1) {
+        $GO_slim_state = 0;
+      }
+      elsif($GO_slim_state) {
+        push(@All_GO_slim_ids, (split(/\t/,$line))[-1] // "NA");
+      }
 		}
 	}
 	close $filehandle;
@@ -157,8 +153,8 @@ sub check_arguments {
   if(defined $_[1]) {
       # check if output file already exists
       if(-e $_[1]) {
-	  	print("Output file already exists, please provide an other output path.\n");
-		exit;
+	  	  print("Output file already exists, please provide an other output path.\n");
+		    exit;
       }
   }
 }
