@@ -72,7 +72,7 @@ sub parse {
       # output information
       # if output path is set, write to file
       # otherwise print in console
-      my $delimiter = $tsv ? "\t" : ",";
+      my $delimiter = $csv ? "," : "\t";
       if(defined $out) {
         write_file($out, join($delimiter, $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim));
       }
