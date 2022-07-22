@@ -25,6 +25,14 @@ Input file (original KOBAS annotate file)
 	
 Output file to store converted KOBAS file. If no output path is provided, results will be printed on the console.
 
+=item I<--tsv>
+
+Output file type (tab delimited)
+
+=item I<--csv>
+
+Output file type (comma delimited)
+
 =back 
 
 =cut
