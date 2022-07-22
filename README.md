@@ -22,6 +22,8 @@ perl annotate_parser.pl -i inputfile -o outputfile
 | --------- | ----------- | ------- |
 | `-i` | /path/to/input_file | if multiple -> comma separated |
 | `-o` | /path/to/output_file | if not specified, output is send to the console |
+| `--tsv` | output format | default: tab delimited |
+| `--csv` | output format | default: tab delimited |
 
 ## Test
 The 'test' folder contains a template file, generated with the 'annotate' tool from KOBAS using their provided test IDs. 
