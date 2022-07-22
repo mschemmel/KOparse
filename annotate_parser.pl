@@ -29,9 +29,9 @@ Output file to store converted KOBAS file. If no output path is provided, result
 
 =cut
 
-
 my $help = 0;
 my ($in, $out);
+my ($tsv, $csv);
 my $state = 0;
 my ($Path_state, $GO_state, $GO_slim_state) = (0)x3;
 my ($Query, $Gene_id, $Gene_name, $Entrez_id) = ("NA")x4;
@@ -40,6 +40,8 @@ my (@All_pathway_ids, @All_GO_ids, @All_GO_slim_ids);
 # handle command line options
 GetOptions('i=s' => \$in,
            'o=s' => \$out,
+           'tsv' => \$tsv, 
+           'csv' => \$csv, 
 					 q(help) => \$help) or pod2usage(q(-verbose) => 1);
 
 pod2usage(q(-verbose) => 1) if $help;
@@ -70,11 +72,12 @@ sub parse {
       # output information
       # if output path is set, write to file
       # otherwise print in console
+      my $delimiter = $tsv ? "\t" : ",";
       if(defined $out) {
-        write_file($out, join("\t", $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim));
+        write_file($out, join($delimiter, $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim));
       }
       else {
-        print(join("\t", $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim) . "\n");
+        print(join($delimiter, $Query, $Gene_id, $Gene_name, $Entrez_id, $Pathway, $GO, $GO_slim) . "\n");
       }
 
       # reset variables for next annotation
