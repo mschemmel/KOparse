@@ -166,7 +166,7 @@ sub check_arguments {
   if(defined $_[1]) {
       # check if output file already exists
       if(-e $_[1]) {
-	  	  print("Output file already exists, please provide an other output path.\n");
+	  	  print("Output file already exists, please provide different output path.\n");
 		    exit;
       }
   }
