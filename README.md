@@ -20,7 +20,7 @@ perl annotate_parser.pl -i inputfile -o outputfile
 ### Arguments
 | Parameter | Description | Comment |
 | --------- | ----------- | ------- |
-| `-i` | /path/to/input_file | if multiple -> comma separated |
+| `-i` | /path/to/input_file | comma separated if multiple |
 | `-o` | /path/to/output_file | if not specified, output is send to the console |
 | `--tsv` | output format | default: tab delimited |
 | `--csv` | output format | default: tab delimited |
