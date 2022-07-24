@@ -49,15 +49,17 @@ my (@All_pathway_ids, @All_GO_ids, @All_GO_slim_ids);
 GetOptions('i=s' => \$in,
            'o=s' => \$out,
            'tsv' => \$tsv, 
-           'csv' => \$csv, 
-					 q(help) => \$help) or pod2usage(q(-verbose) => 1);
+           'csv' => \$csv,
+				   q(help) => \$help) or pod2usage(q(-verbose) => 1);
 
+# show help
 pod2usage(q(-verbose) => 1) if $help;
 
 # check command line options
 check_arguments($in, $out);
 
-# input files can be provided comma separated -> all files will be parsed into single output file
+# input files can be provided comma separated
+# all files will be parsed into single output file
 my @samples = (split(/,/,$in));
 foreach(@samples) {
 	parse($_);
@@ -138,7 +140,7 @@ sub parse {
         push(@All_GO_ids, (split(/\t/,$line))[-1] // "NA");
       }
 
-      # get GO Slim ids
+      # get GO slim ids
       if($line =~ /^GOslim:/ and $GO_slim_state == 0) {
         push(@All_GO_slim_ids, (split(/\t/,$line))[-1] // "NA");
         $GO_slim_state = 1
@@ -155,12 +157,12 @@ sub parse {
 }
 
 sub check_arguments {
-  # check if input file is provided, otherwise exit the program
+  # check if input ('-i') file is provided, otherwise exit program
   if(!$_[0]) {
     print("No input file provided. Use '-i' tag.\n");
     exit;
   }
-  # check if '-o' parameter is provided
+  # check if output ('-o') parameter is provided
   if(defined $_[1]) {
       # check if output file already exists
       if(-e $_[1]) {
