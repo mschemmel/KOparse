@@ -10,7 +10,7 @@ However, the format of the results after annotation is not very convenient, as i
 
 'annotate_parser' is a perl script parsing the results of the 'Annotate' section to tabular format.
 Using the default settings on the KOBAS site, the columns of the formatted output table are in
-order: Query name, Gene id, Gene name, Entrez id, Pathway, GO, GO slim.
+order: Query name, Gene id, Gene name, Entrez id, Pathway, GO and GO slim.
 
 ## Usage
 ```
